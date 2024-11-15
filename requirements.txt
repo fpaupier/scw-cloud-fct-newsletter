@@ -1,2 +1,3 @@
 boto3==1.34.30
 scw-serverless==1.2.0
+pytz==2024.2
