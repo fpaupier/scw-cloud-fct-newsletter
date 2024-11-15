@@ -1,4 +1,6 @@
 import json
+import logging
+
 import boto3
 import os
 from datetime import datetime
@@ -6,7 +8,31 @@ import pytz
 import csv
 from io import StringIO
 
+from scw_serverless import Serverless
 
+REGION = "fr-par"
+S3_URL = "https://s3.fr-par.scw.cloud"
+
+SCW_ACCESS_KEY = os.environ["SCW_ACCESS_KEY"]
+SCW_SECRET_KEY = os.environ["SCW_SECRET_KEY"]
+BUCKET_NAME = os.environ["BUCKET_NAME"]
+
+app = Serverless(
+    "s3-utilities",
+    secret={
+        "SCW_ACCESS_KEY": SCW_ACCESS_KEY,
+        "SCW_SECRET_KEY": SCW_SECRET_KEY,
+    },
+    env={
+        "BUCKET_NAME": BUCKET_NAME,
+        "PYTHONUNBUFFERED": "1",
+    },
+)
+
+logging.basicConfig(level=logging.INFO)
+
+
+@app.func(memory_limit=512)
 def handle(event, context):
     # Validate request method
     if event.get('method') != 'POST':
@@ -85,3 +111,9 @@ def handle(event, context):
             'body': json.dumps({'error': str(e)}),
             'headers': {'Content-Type': ['application/json']}
         }
+
+
+if __name__ == "__main__":
+    from scaleway_functions_python import local
+
+    local.serve_handler(handle)
