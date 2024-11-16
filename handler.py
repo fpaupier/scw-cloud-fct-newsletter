@@ -18,7 +18,7 @@ SCW_SECRET_KEY = os.environ["SCW_SECRET_KEY"]
 BUCKET_NAME = os.environ["BUCKET_NAME"]
 
 app = Serverless(
-    "s3-utilities",
+    "s3-csv-email-writer",
     secret={
         "SCW_ACCESS_KEY": SCW_ACCESS_KEY,
         "SCW_SECRET_KEY": SCW_SECRET_KEY,
@@ -115,5 +115,6 @@ def handle(event, context):
 
 if __name__ == "__main__":
     from scaleway_functions_python import local
-
     local.serve_handler(handle)
+
+
