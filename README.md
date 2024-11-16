@@ -1,7 +1,8 @@
 # Newsletter Subscription Handler
 
-A serverless function built for Scaleway that manages newsletter subscriptions by storing registration data in a CSV
-file using Object Storage.
+A serverless function built
+for [Scaleway](https://www.scaleway.com/en/docs/serverless/functions/reference-content/deploy-function/) that manages
+newsletter subscriptions by storing registration data in a CSV file using Object Storage.
 
 ## Overview
 
