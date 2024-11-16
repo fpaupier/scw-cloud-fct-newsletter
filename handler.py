@@ -43,17 +43,15 @@ def handle(event, context):
             'headers': {'Content-Type': ['application/json']}
         }
 
-    # Get email from request body
-    try:
-        body = json.loads(event.get('body', '{}'))
-        email = body.get('email')
-        if not email:
-            raise ValueError('Email is required')
-    except:
+    # Get email from query parameters
+    query_params = event.get('queryStringParameters', {}) or {}
+    email = query_params.get('email')
+
+    if not email:
         return {
             'statusCode': 400,
-            'body': json.dumps({'error': 'Invalid request body'}),
-            'headers': {'Content-Type': ['application/json']}
+            'body': json.dumps({'error': 'Email parameter is required'}),
+            'headers': {'Content-Type': 'application/json'}
         }
 
     # Initialize S3 client
