@@ -35,7 +35,8 @@ logging.basicConfig(level=logging.INFO)
 @app.func(memory_limit=512)
 def handle(event, context):
     # Validate request method
-    if event.get('method') != 'POST':
+    method = event['httpMethod']
+    if method != 'POST':
         return {
             'statusCode': 405,
             'body': json.dumps({'error': 'Method not allowed'}),
